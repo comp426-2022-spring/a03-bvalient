@@ -37,7 +37,7 @@ function coinFlip() {
         tails += 1
       }
     }
-    return "{ heads: " + heads + ", tails: " + tails + " }"
+    return {'heads': heads, 'tails': tails}
   }
 
   function flipACoin(call) {
