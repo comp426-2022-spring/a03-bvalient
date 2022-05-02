@@ -35,7 +35,7 @@ function coinFlip() {
     return returnable;
   }
 
-  export function countFlips(array) {
+  function countFlips(array) {
     let heads = 0;
     let tails = 0;
     for(let i = 0; i < array.length; i++){
