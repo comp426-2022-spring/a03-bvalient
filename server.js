@@ -1,7 +1,4 @@
 //require express.js
-import express from 'express'
-import minimist from 'minimist'
-
 const express = require('express')
 const app = express()
 
@@ -74,8 +71,13 @@ app.get('/app/', (req, res) => {
     res.end(res.statusCode + ' ' + res.statusMessage)
 });
 
-app.get('/app/flip/', (req, res)=>{
-    res.status(200).json({'flip' : coinFlip()})
+app.get('/app/flip/', (req, res) => {
+    res.statusCode = 200
+    const json = { "flip" : coinFlip() }
+    res.status(res.statusCode)
+    res.setHeader('Content-Type', 'application/json')
+    res.json(json)
+    
 });
 
     app.get('/app/flip/call/heads', (req, res) =>{
