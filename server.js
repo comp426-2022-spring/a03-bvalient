@@ -64,8 +64,16 @@ function coinFlip() {
     }
   }
 
-  
-  app.get('/app/flip/', (req, res)=>{
+app.get('/app/', (req, res) => {
+    //status 200
+    res.statusCode = 200;
+    // status message "OK"
+    res.statusMessage = 'OK';
+    res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain'});
+    res.end( res.statusCode + ' ' + res.statusMessage)
+});
+
+app.get('/app/flip/', (req, res)=>{
     res.status(200).json({'flip' : coinFlip()})
 });
 
@@ -75,14 +83,4 @@ function coinFlip() {
 
 app.get('/app/flip/call/tails', (req, res) =>{
     res.status(200).send(flipACoin('tails'))
-});
-
-
-app.get('/app/', (req, res) => {
-    //status 200
-    res.statusCode = 200;
-    // status message "OK"
-    res.statusMessage = 'OK';
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain'});
-    res.end( res.statusCode + ' ' + res.statusMessage)
 });
