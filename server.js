@@ -65,6 +65,9 @@ function coinFlip() {
   }
 
   
+  app.get('/app/flip/', (req, res)=>{
+    res.status(200).json({'flip' : coinFlip()})
+});
 
 app.get('/app/', (req, res) => {
     //status 200
