@@ -42,12 +42,10 @@ function coinFlip() {
 
   function flipACoin(call) {
     let theFlip = coinFlip();
-    let resultW = "win"
-    let resultsL = "lose"
     if(theFlip == call){
-      return "{call: " + call + ", flip: " + theFlip + ", result: " + resultW + "}"
+      return {call: call, flip: theFlip, result: 'win'}
     } else {
-      return "{call: " + call + ", flip: " + theFlip + ", result: " + resultsL + "}"
+      return {call: call, flip: theFlip, result: 'lose'}
     }
   }
 
