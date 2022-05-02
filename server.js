@@ -1,77 +1,50 @@
-//require express.js
-const express = require('express')
-const app = express()
-
-const { get } = require('http')
-
-const args = require('minimist')(process.argv.slice(2))
-args["port"]
-const port = args.port || process.env.port || 5000
-
-//start an app server
-const server = app.listen(port, () =>{
-    console.log('App Listening on port %PORT%'.replace('%PORT%', port))
-});
-
-//default response for any other request
-app.use(function(req, res){
-    res.status(404).send('404 NOT FOUND')
-});
-
-//functions
 function coinFlip() {
-    if(Math.random() > .5){
-      return "tails"
-    } else {
-      return "heads"
-    }
-  }
+    return Math.random() > 0.5 ? 'heads' : 'tails'
+}
 
-  function coinFlips(flips) {
-    let returnable = [];
+function coinFlips(flips) {
+    const result = []
     for(let i = 0; i < flips; i++){
-      returnable.push(coinFlip());
-    } 
-    return returnable;
-  }
-
-  function countFlips(array) {
-    let heads = 0;
-    let tails = 0;
-    for(let i = 0; i < array.length; i++){
-      if (array[i] == "heads"){
-        heads += 1;
-      } else {
-        tails += 1
-      }
+      result[i] = coinFlip()
     }
-    return "{ heads: " + heads + ", tails: " + tails + " }"
-  }
+    return result
+}
 
-  function flipACoin(call) {
-    let er_mes = "Error: no input." + "\n"
-    let fix_mes = "Usage: node guess-flip --call=[heads|tails]"
-    if(call != "heads" && call != "tails"){
-      return er_mes + fix_mes
-    }
-    let theFlip = coinFlip();
-    let resultW = "win"
-    let resultsL = "lose"
-    if(theFlip == call){
-      return "{ call: " + call + ", flip: " + theFlip + ", result: " + resultW + " }"
+function countFlips(array) {
+    let head = 0
+    let tail = 0
+    array.forEach(element => {
+      if(element == "heads") head++
+      else tail++
+    });
+    if (head == 0) {
+      return {'tails': tail}
+    } else if (tail == 0) {
+      return {'heads': head}
     } else {
-      return "{ call: " + call + ", flip: " + theFlip + ", result: " + resultsL + " }"
+      return {'heads': head, 'tails': tail}
     }
-  }
+}
+
+
+function flipACoin(call) {
+    let flip = coinFlip()
+    const result = ""
+    if(call == flip) return {call: call, flip: flip, result: 'win'}
+    else return {call: call, flip: flip, result: 'lose'}
+}
+
+const app = express()
+const args = minimist(process.argv.slice(2));
+const port = args.port || process.env.PORT || 5000
 
 app.get('/app/', (req, res) => {
-    //status 200
-    res.statusCode = 200;
-    // status message "OK"
-    res.statusMessage = 'OK';
-    res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain'});
-    res.end(res.statusCode + ' ' + res.statusMessage)
-});
+    // Respond with status 200
+        res.statusCode = 200;
+        res.statusMessage = 'OK';
+        res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
+        res.end(res.statusCode+ ' ' +res.statusMessage)
+    });
 
 app.get('/app/flip/', (req, res) => {
     res.statusCode = 200
@@ -82,15 +55,30 @@ app.get('/app/flip/', (req, res) => {
     
 });
 
-    app.get('/app/flip/call/heads', (req, res) =>{
-    res.status(200).send(flipACoin('heads'))
-});
-
-app.get('/app/flip/call/tails', (req, res) =>{
-    res.status(200).send(flipACoin('tails'))
-});
-
 app.get('/app/flips/:number', (req, res) => {
-    const flips = coinFlips(req.params.number)
-    res.status(200).json({'raw' : flips, 'summary' : countFlips(flips)})
+    res.statusCode = 200
+    const raw = coinFlips(req.params.number || 1)
+    const summary = countFlips(raw)
+    const json = {
+        "raw": raw,
+        "summary": summary
+    }
+    res.setHeader('Content-Type', 'application/json')
+    res.json(json)
+})
+
+app.get('/app/flip/call/:call', (req, res) => {
+    res.statusCode = 200
+    const json = flipACoin(req.params.call)
+    res.setHeader('Content-Type', 'application/json')
+    res.json(json)
+})
+app.use(function(req, res){
+    res.status(404).send('404 NOT FOUND')
+});
+
+
+
+const server = app.listen(port, () => {
+        console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
