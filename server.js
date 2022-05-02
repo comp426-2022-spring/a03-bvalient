@@ -69,6 +69,10 @@ function coinFlip() {
     res.status(200).json({'flip' : coinFlip()})
 });
 
+    app.get('/app/flip/call/heads', (req, res) =>{
+    res.status(200).send(flipACoin('heads'))
+});
+
 app.get('/app/', (req, res) => {
     //status 200
     res.statusCode = 200;
