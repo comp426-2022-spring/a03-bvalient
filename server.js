@@ -41,11 +41,6 @@ function coinFlip() {
   }
 
   function flipACoin(call) {
-    let er_mes = "Error: no input." + "\n"
-    let fix_mes = "Usage: node guess-flip --call=[heads|tails]"
-    if(call != "heads" && call != "tails"){
-      return er_mes + fix_mes
-    }
     let theFlip = coinFlip();
     let resultW = "win"
     let resultsL = "lose"
