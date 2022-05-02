@@ -45,9 +45,9 @@ function coinFlip() {
     let resultW = "win"
     let resultsL = "lose"
     if(theFlip == call){
-      return "{ call: " + call + ", flip: " + theFlip + ", result: " + resultW + " }"
+      return "{call: " + call + ", flip: " + theFlip + ", result: " + resultW + "}"
     } else {
-      return "{ call: " + call + ", flip: " + theFlip + ", result: " + resultsL + " }"
+      return "{call: " + call + ", flip: " + theFlip + ", result: " + resultsL + "}"
     }
   }
 
