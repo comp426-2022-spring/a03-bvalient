@@ -73,6 +73,11 @@ function coinFlip() {
     res.status(200).send(flipACoin('heads'))
 });
 
+app.get('/app/flip/call/tails', (req, res) =>{
+    res.status(200).send(flipACoin('tails'))
+});
+
+
 app.get('/app/', (req, res) => {
     //status 200
     res.statusCode = 200;
