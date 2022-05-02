@@ -1,8 +1,9 @@
 //require express.js
+import express from 'express'
+import minimist from 'minimist'
+
 const express = require('express')
 const app = express()
-
-const {get} = require('http')
 
 const args = require('minimist')(process.argv.slice(2))
 args["port"]
@@ -70,7 +71,7 @@ app.get('/app/', (req, res) => {
     // status message "OK"
     res.statusMessage = 'OK';
     res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain'});
-    res.end( res.statusCode + ' ' + res.statusMessage)
+    res.end(res.statusCode + ' ' + res.statusMessage)
 });
 
 app.get('/app/flip/', (req, res)=>{
