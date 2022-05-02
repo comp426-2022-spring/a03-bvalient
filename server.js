@@ -6,11 +6,11 @@ const {get} = require('http')
 
 const args = require('minimist')(process.argv.slice(2))
 args["port"]
-const HTTP_PORT = args.port || process.env.port || 5000
+const port = args.port || process.env.port || 5000
 
 //start an app server
-const server = app.listen(HTTP_PORT, () =>{
-    console.log('App Listening on port %PORT%'.replace('%PORT%', HTTP_PORT))
+const server = app.listen(port, () =>{
+    console.log('App Listening on port %PORT%'.replace('%PORT%', port))
 });
 
 //default response for any other request
